@@ -1,0 +1,18 @@
+Name:    Ted Holmberg
+Project: Homework 2
+
+Homework hosted as Interactive Web Page:
+https://scalemailted.github.io/MachineLearning1-HW2/
+
+All files hosted on Github
+https://github.com/scalemailted/MachineLearning1-HW2
+
+#TODO:
+Introduction:
+This project completes all of the core specifications within the assignment,
+It provides an interative tools to generate regression models and then evaluate them with tables and graphs
+
+For any questions:
+contact: eholmber@uno.edu
+
+

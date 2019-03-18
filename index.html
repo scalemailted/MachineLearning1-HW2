@@ -1,0 +1,1704 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Ted Talks | ML</title>
+	<link rel="icon" href="images/Ted2018.png">
+
+	
+	<!--BootStrap CSS-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+	<link rel="stylesheet"  href="./styles/bootstrap.min.css"></link>
+	<!--[End] BootStrap CSS-->
+	<link rel="stylesheet" href="styles/data_table.css" charset="utf-8">
+	<link rel="stylesheet" href="styles/scatterplot.css" charset="utf-8">
+	<link rel="stylesheet" href="styles/barchart.css" charset="utf-8">
+
+	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;skin=sunburst"></script>
+
+	<script src="scripts/libs/math.js" type="text/javascript"></script>
+	<script src="scripts/data/data.js"></script>
+
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+		  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+		});
+	</script>
+	
+	<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async> </script>
+	
+</head>
+<body>
+
+<!-- JUMOBOTRON START-->
+	<div class="jumbotron jumbotron-fluid bg-primary">
+		<div class="container">
+			<div class="row text-center">	
+				<div class="col-3-md">		
+					<img src="images/Ted2018.png" height='120'style='border-radius: 50%;'/>
+				</div>
+				<div class="col-9-md">
+					<h1 class="display-3 text-white">Ted Talks:</h1>
+					<h2 class="lead text-white pl-2 ml-2">On Machine Learning</h2>
+				</div>
+			</div>
+			
+			<!--<h1>Ted Talks: <i>on Machine Learning</i></h1>-->
+			<div class="text-center text-white">
+				<div class="bg-white">
+					<hr>
+				</div>
+				<h2>Linear Regression Modeling:</br><span class="lead">Designing & Evaluating a Forest Fire Predictor</span></h2>
+			</div>
+		</div>
+	</div>
+<!-- JUMBOTRON END-->
+
+<!-- 1. INTRO START-->
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-6'>
+				<h2>0. Introduction</h2>
+			</div>
+			<div class='col-6 text-right'>
+				<button class="btn btn-primary btn-sm" 
+						type="button" 
+						data-toggle="collapse" 
+						data-target="#collapseIntro" 
+						aria-expanded="false" 
+						aria-controls="collapseIntro">
+							Show	
+				</button>
+			</div>
+		</div>
+		<div class="collapse show" id="collapseIntro">
+			<p class='text-secondary lead'>
+				<i>This project has two primary motivations targeted towards Machine Learning:</i>
+			</p>
+
+			<div class='container'>
+				<h4 class='lead text-primary'><b>Goal 1: Pedagogical Applications</b></h4>
+				<p>
+					Machine Learning and Data Science is a rapidly growing field with many gainful employment opportunities. But for many, the very idea of Machine Learning might as well be magic; powered by some unknowable, arcane, mystic force. To a beginner, the mathematics used in Machine Learning algorithms may be intimidating. However, the basic underlining concepts that drive Machine Learning are actually relatively simple. A goal of this project is to better teach Machine Learning priciples by guiding the reader through an interactive walk-through process, while stepping through and defining many of the design considerations made in crafting a predictor.
+				</p>
+				<p>
+					This example project aims to illustrate the type of problem statements that are suitable for a Machine Learning approach. And then to walk-through the process of designing, implementing, and analyzing a Machine Learning solution. It serves as an interactive expercience, enabling you to perform analysis via the embedded tools and visulations. Interactivity is important in learning, where user-lead experimentation, allows one to develop their own conclusions and test to verify their understanding of the problem. In other words, one typically best learns by doing, and one typically best understands abstract concepts when mapped to specific examples and use cases.
+				</p>
+
+				<h4 class='lead text-primary'><b>Goal 2: Practical Applications</b></h4>
+				<p>
+					This project serves as a Proof-of-Concept in training and testing regression models for execution within the client-side browser run-time environment using Javascript.  In general, the browser environment is a subpar platform for running machine learning applications, however its potential capabilities scale incredibly well. In regression modeling, generating different models and evaluating their performance is incredibly well suited for concurrent processing, as each model is independent to all others. So the principal idea behind implementing a solution in JavaScript, is to host the dataset on a HTTP server, and for each client that connects to the HTTP server, give it part of the data along with regression codebase. Let the client calculate a result locally, and then send back result to the server which can then integrate the results together from all other clients. This allows for any computing device equipped with a web browser to join the cluster. The vast scalability across multiple devices should diminish the subpar processing performance that occurs on a single machine using the browser.  
+				</p>
+				<img class='img-fluid' src='./images/0-Intro/Webserver-ML.png'>
+			</div>
+		</div>
+	</div>
+<!-- 1. INTRO END-->
+
+<hr>
+
+<!-- 2. TECHNOLOGY START-->
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-6'>
+				<h2>1. Technology</h2>
+			</div>
+			<div class='col-6 text-right'>
+				<button class="btn btn-primary btn-sm" 
+						type="button" 
+						data-toggle="collapse" 
+						data-target="#collapseTech" 
+						aria-expanded="false" 
+						aria-controls="collapseTech">
+							Show	
+				</button>
+			</div>
+		</div>
+		<div class="collapse show" id="collapseTech">
+			<p class='text-secondary lead'>
+				<i>This project requires execution within the browser, which limits the options of many common ML technologies and tools.
+				</i>
+			</p>
+			<!-- JavaScript -->
+			<div class='container pb-2 bg-light border'>
+				<div class='row pt-1'>
+					<div class='col-3'>
+						<h4><b>JavaScript</b></h4>
+						<img height='100' src='./images/1-Tech/javascript.png'>
+					</div>
+					<div class='col-9'>
+						<p>
+							This project is strictly implemented in <b>JavaScript (ECMA6)</b> as its the only programming language natively supported within the browser run-time environment. The main advantage of JavaScript is portability, as every computing device that has a web browser also has a Javascript runtime environment. Additionally, all javascript applications run directly within the browser without the need of installing new executables.cJavascript applications may also be embedded within a web page containing supporting documentation and graphics. For more info: <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript' target='_blank'>https://developer.mozilla.org/en-US/docs/Web/JavaScript</a> 
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- MathJS-->
+			<div class='container pb-2 table-light border'>
+				<div class='row pt-1'>
+					<div class='col-3'>
+						<h4><b>Math.js</b></h4>
+						<img height='50' src='./images/1-Tech/mathjs.png'>
+					</div>
+					<div class='col-9'>
+						<p>
+							<b>Math.js</b> is an open-source extensive math library for JavaScript.  It supports numbers, big numbers, complex numbers, fractions, units, strings, arrays, and matrices. Its compatible with JavaScript’s built-in Math library and runs on any JavaScript engine. For this project, Math.js was selected for its ability to easily chain Matrix operations, as JS doesn't allow for operator overloading. Additionally, it included some useful statistical functions. For more info: <a href='https://mathjs.org/' target='_blank'>https://mathjs.org</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- D3-->
+			<div class='container pb-3 bg-light border'>
+				<div class='row pt-1'>
+					<div class='col-3'>
+						<h4><b>D3.js</b></h4>
+						<img height='100' src='./images/1-Tech/d3.png'>
+					</div>
+					<div class='col-9'>
+						<p>
+							<b>D3.js</b> is an open-source, interactive data visualization library for JavaScript. D3 is compatible with all modern browsers without requiring any proprietary frameworks. For this project, D3 was selected for its ability to generate interactive scatter plots, line plots, bar charts, with user controls and animations. All graphs presented are generated with this library. For more info: <a href='https://d3js.org/' target='_blank'>https://d3js.org</a>  
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- MathJax-->
+			<div class='container pt-2 pb-2 table-light border'>
+				<div class='row pt-1'>
+					<div class='col-3'>
+						<h4><b>MathJax.js</b></h4>
+						<img height='100' src='./images/1-Tech/mathjax.png'>
+					</div>
+					<div class='col-9'>
+						<p>
+							<b>MathJax.js</b> is a JavaScript library for displaying mathematical symbols within HTML. It uses LaTex syntax and is compatible for all browsers. For this project, all mathemtaical formula displayed is rendered with this library. For more info: <a href='https://www.mathjax.org/' target='_blank'>https://www.mathjax.org/</a>  
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- Twitter Bootstrap-->
+			<div class='container pt-2 pb-2 bg-light border'>
+				<div class='row pt-1'>
+					<div class='col-3'>
+						<h4><b>Bootstrap</b></h4>
+						<img height='100' src='./images/1-Tech/bootstrap.png'>
+					</div>
+					<div class='col-9'>
+						<p>
+							<b>Bootstrap</b> is a free and open-source front-end Web framework. It contains HTML and CSS-based design templates for typography, forms, buttons, navigation and other interface components, as well as optional JavaScript extensions. For more info: <a href='https://getbootstrap.com/' target='_blank'>https://getbootstrap.com/</a>  
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- END-->
+		</div>
+	</div>
+<!-- 2. TECHNOLOGY END -->
+
+<hr>
+
+<!-- 3. SCENARIO START-->
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-6'>
+				<h2>2. Problem (Scenario)</h2>
+			</div>
+			<div class='col-6 text-right'>
+				<button class="btn btn-primary btn-sm" 
+						type="button" 
+						data-toggle="collapse" 
+						data-target="#collapseScenario" 
+						aria-expanded="false" 
+						aria-controls="collapseScenario">
+							Show	
+				</button>
+			</div>
+		</div>
+		<div class="collapse show" id="collapseScenario">
+			<p class='text-secondary lead'>
+				<i>This project aims to use a real-world problem thats suitable for a ML approach.
+					This section, establishes a scenario that simulates the initial problem statement.    
+				</i>
+			</p>
+			<div class='container'>
+				<div class='text-center'>
+					<h4><b>Predicting Forest Fire Devastation</b></h4>
+					<img src='images/forestfire.jpg' class='img-fluid'/>
+				</div>
+
+				<!-- Initial Description given-->
+				<div class='pt-4'>
+					<h4> Problem Description: </h4>
+					<p>						
+						Forest-fire or bushfire is a serious environmental issue, creates economic and ecological damages and threatens human lives in many places in the world such as Arizona, Australia, Argentina, Canada, New Zealand, Portugal etc. Fast detection or, prediction can help firefighters greatly and reduce casualties. Further, if the size of the affected area can be predicted at the same time, it will provide an estimation of resources required to fight the fire.
+					</p>
+					<p>
+						Forest Fire Prediction: we will develop model(s) for predicting forest fire from given datasets.
+					</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+<!-- 3. SCNEARIO END-->
+
+<hr>
+
+<!-- 4. DATASET START-->
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-6'>
+				<h2>3. Dataset</h2>
+			</div>
+			<div class='col-6 text-right'>
+				<button class="btn btn-primary btn-sm" 
+						type="button" 
+						data-toggle="collapse" 
+						data-target="#collapseDataset" 
+						aria-expanded="false" 
+						aria-controls="collapseDataset">
+							Show	
+				</button>
+			</div>
+		</div>
+		<div class="collapse show" id="collapseDataset">
+			<p class='text-secondary lead'>
+				<i>This section details the initial dataset and strategies on how to use it effectively</i>
+			</p>
+			<div class='container'>
+				<h4>Dataset Selection</h4>
+				<p>				
+					The possible major resources-categories to collect data to build-up a prediction model can be: 
+					<ul>
+						<li>(a) satellite-based datasets</li> 
+						<li>(b) setup remote-sensors and collect sensor datasets</li> 
+						<li>(c) collect meteorological datasets.</li> 
+					</ul>
+
+
+					Since automatic meteorological stations are often available and the dataset is available at a lower cost - we will develop a model based on the meteorological dataset.
+				</p>
+
+				<h4>Dataset Description</h4>
+				<p>
+					The given data has 517 instances – each data point is 12 dimensional and the output column (13th column) is the burned area given in hectors (ha). The features or attributes including the output (burned) “area” are given in the table below. 		
+				</p>
+
+				<!-- DataSet Table-->
+				<div>
+					<h4>
+						<span class='lead text-secondary'>Table-0:</span> 
+						<span class='text-primary'>Dataset Features:</span> 
+						<span class='lead text-primary'> <i>Historical Forest Fire Records & Measurements</i></span>
+					</h4>
+					<table class='table table-sm table-striped'>
+						<tr>
+							<th>#</th>
+							<th>Feature</th>
+							<th>Description</th>
+							<th>Range</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>X</td>
+							<td>x-axis spatial coordinate of a park map</td>
+							<td><i>1 to 9</i></td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>Y</td>
+							<td>y-axis spatial coordinate of a park map</td>
+							<td><i>1 to 9</i></td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>Month</td>
+							<td>month of the year</td>
+							<td><i>'jan' to 'dec'</i></td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>Day</td>
+							<td>day of the week</td>
+							<td><i>'mon' to 'sun'</i></td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>FFMC</td>
+							<td>Fine Fuel Moisture Code</td>
+							<td><i>18.7 to 96.20</i></td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>DMC</td>
+							<td>Duff Moisture Code</td>
+							<td><i>1.1 to 291.3</i></td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>DC</td>
+							<td>Drought Code</td>
+							<td><i>7.9 to 860.6</i></td>
+						</tr>
+						<tr>
+							<td>8</td>
+							<td>ISI</td>
+							<td>Initial Spread Index</td>
+							<td><i>0.0 to 56.10</i></td>
+						</tr>
+						<tr>
+							<td>9</td>
+							<td>temp</td>
+							<td>temperature in Celsius degrees</td>
+							<td><i>2.2 to 33.30</i></td>
+						</tr>
+						<tr>
+							<td>10</td>
+							<td>RH</td>
+							<td>relative humidity in %</td>
+							<td><i>15.0 to 100</i></td>
+						</tr>
+						<tr>
+							<td>11</td>
+							<td>wind</td>
+							<td>wind speed in km/h</td>
+							<td><i>0.40 to 9.40</i></td>
+						</tr>
+						<tr>
+							<td>12</td>
+							<td>rain</td>
+							<td>rain in mm/m2</td>
+							<td><i>0.0 to 6.4</i></td>
+						</tr>
+						<tr>
+							<td>13</td>
+							<td>area</td>
+							<td>the burned area of the forest (in ha)</td>
+							<td><i>0.00 to 1090.84</i></td>
+						</tr>
+					</table>
+				</div>
+
+				<div>
+					<h4>Formatting Dataset</h4>
+					<p>
+						The dataset is in CSV format. Since the target platform is the browser application, then the data must first be converted into JSON format. The 517 data rows are instantiated as key-value objects, and pushed into an array. This allows the data to be stored client-side, without having to be hosted remotely. By default, other file formats cannot normally be be opened locally through a browser due to default security settings (i.e. cross-site scripting). For the JSON dataset: <a href='scripts/data/data.js' target='_blank'>data.js</a>	
+					</p>
+				</div>
+
+
+				<div>
+					<h4>Normalize Dataset</h4>
+					<p>
+						Data normalization is the process of rescaling the values of a feature to be between 0-1. The purpose of normalizing data scales the numberical values down for computational efficiency. Data normalization should occur when training a predictor, and then the selected model can be trained on unaltered dataset to deliver to end users.  
+					</p>
+
+					<div class='border p-1 m-4 text-center'>
+						<h4 class='lead text-danger'><b>Normalization (Mathematics)</b></h4>
+						<p>$x' = {x \, - \, \text{min } x  \over \text{max } x \, - \, \text{min } x} $</p>
+					</div>
+
+					<div>
+						<p>
+							<i>Explanation:</i> Given a feature $x$ in the dataset, then every x value from that feature-column must be normalized between 0-1. The normalized value ($x'$) can be calculated as the ratio between: 
+							<ul>
+								<li>difference between current x & minimal x</li> 
+								<li>difference between maximum x & minimal x </li>
+							</ul>
+							Note that after normalization is performed, the minimal x=0, and the maximal value of x=1; 
+						</p>
+					</div>
+
+					<!-- CODE-->
+					<h4 class='pt-2'>Normalize Dataset (Javascript)</h4>
+
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							/* Normalize dataset with values between 0 to 1. */<br>
+							const normalize = (val, min, max) => (val - min)/(max - min);<br>
+						</div>
+					</div>
+					<p class='p-2'>
+						<span class='text-primary'><b>Explanation:</b></span> The <i>normalize</i> function takes in a current value, minimal value, maximal value as numerical parameters and calculates then returns the normalized value.  
+					</p>
+					
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							const normalize_feature = function(dataset, feature){<br>&nbsp; &nbsp; &nbsp; &nbsp; 
+								let max = d3.max(dataset, d => d[feature] );<br>&nbsp; &nbsp; &nbsp; &nbsp; 
+							    let min = d3.min(dataset, d => d[feature] );<br>&nbsp; &nbsp; &nbsp; &nbsp; 
+							    dataset.forEach( d => d[feature] = normalize( d[feature], min, max) );<br>
+							}<br>
+						</div>
+					</div>
+					
+					<p class='p-2'>
+						<span class='text-primary'><b>Explanation:</b></span> The <i>normalize_feature</i> function normalizes all values of a feature. The function takes in a dataset <i>(object array)</i> and a feature <i>(string)</i>. The D3.js library contains methods that return the min and max values from a dataset. Iterate over every value of feature in dataset array and reassign it with the normalized value.      
+					</p>
+
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							const normalize_dataset = function(dataset, featureList){<br>&nbsp; &nbsp; &nbsp; &nbsp; 
+								featureList.map( feature => normalize_feature(dataset, feature) );<br>
+							}<br>
+						</div>
+					</div>
+
+					<p class='p-2'>
+						<span class='text-primary'><b>Explanation:</b></span> The <i>normalize_dataset</i> function normalizes all features in the dataset. The function takes in a dataset <i>(object array)</i> and a featureList <i>(string array)</i>.  Iterate over every feature and invoke the <i>normalize_feature</i> function.      
+					</p>
+				</div>
+
+
+				<br>
+
+
+				<div>
+					<h4>Training/Testing Strategy</h4>
+					<p>
+						define metric for comparisons: training (used) vs testing (not used)
+						k-fold validation
+						You typically need a dataset to train your predictor, and another to test your predictor.
+						Test data is not separately provided; therefore, you will apply 10-fold cross-validation (FCV). 
+					</p>
+				</div>
+
+				<!-- #TODO
+				<h4><b>Outlier Removal</b></h4>
+				<p class='bg-warning'>
+					(does it matter or not? ) in JS
+					GET CODE FROM EARILER BUILD
+				</p>
+				-->
+
+				<h4><b>Balancing k-fold sets</b></h4>
+				<p>
+					Balancing Folds in JS 
+					Notes: detail how I performed this in Javascript such that it can execute in browser runtime environment. Note, balanced chunkings of dataset, such that minimal discrepancy for any one dataset is at most 1 row.
+					<br>
+					define metric for comparisons: training (used) vs testing (not used): k-fold validation
+					<br>
+					Notes: detail how I performed this in Javascript such that it can execute in browser runtime environment. Note, balanced chunkings of dataset, such that minimal discrepency for any one dataset is at most 1 row. 
+				</p>
+
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+						<span class='text-muted'>
+						/**<br>
+						 * Shuffles array in place. ES6 version<br>
+						 * @param {Array} a items An array containing the items.<br>
+						 */<br>
+						</span>
+
+							<span class='text-info'><i>function</i></span> 
+							<span class='text-success'><b>shuffle</b></span> (
+							<span class='text-warning'><i>arr</i></span> ) {
+						<br>
+						&nbsp; &nbsp; &nbsp; &nbsp; 
+							<span class='text-danger'><b>for</b></span> 
+							(
+							<span class='text-danger'>let</span> i 
+							<span class='text-danger'><b>=</b></span> arr.
+							<span class='text-primary'><i>length</i></span> 
+							<span class='text-danger'><b>-</b></span> 
+							<span class='text-warning'>1</span>; i 
+							<span class='text-danger'><b> > </b></span> 
+							<span class='text-warning'>0</span>; i
+							<span class='text-danger'><b>--</b></span>) {
+						<br>
+						&nbsp; &nbsp; &nbsp; &nbsp; 
+						&nbsp; &nbsp; &nbsp; &nbsp; 
+						    <span class='text-danger'>const</span> j 
+						    <span class='text-danger'><b>=</b></span> 
+						    <span class='text-info'><b><i>Math</i></b></span>.
+						    <span class='text-primary'><i>floor</i></span>(
+						    <span class='text-info'><b><i>Math</i></b></span>.
+						    <span class='text-primary'><i>random</i></span>() 
+						    <span class='text-danger'><b>*</b></span> (i 
+						    <span class='text-danger'><b>+</b></span> 
+						    <span class='text-warning'><b>1</b></span>)
+						    );
+						<br>
+						&nbsp; &nbsp; &nbsp; &nbsp; 
+						&nbsp; &nbsp; &nbsp; &nbsp; 
+							[arr[
+							<span class='text-warning'>i</span>
+							], arr[
+							<span class='text-warning'>j</span>
+							]] 
+							<span class='text-danger'><b>=</b></span> 
+							[arr[
+							<span class='text-warning'>j</span>
+							], arr[
+							<span class='text-warning'>i</span>
+							]];
+						<br>
+						&nbsp; &nbsp; &nbsp; &nbsp;
+						    }
+						<br>
+						&nbsp; &nbsp; &nbsp; &nbsp;
+						    <span class='text-danger'>return</span> arr;<br>
+						}<br>
+					</div>
+				</div>
+				<br>
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+							<span class='text-info'><i>function</i></span> 
+							<span class='text-success'> <b>chunkify</b> </span>(
+							<span class='text-warning'><i>arr</i></span>, 
+							<span class='text-warning'><i>n</i></span>
+							) {
+						<br>
+						&nbsp; &nbsp; &nbsp; &nbsp;
+	    					<span class='text-danger'>let</span> out 
+	    					<span class='text-danger'> <b>=</b></span> [];
+	    				<br>
+	    				&nbsp; &nbsp; &nbsp; &nbsp;
+	    					<span class='text-danger'>let</span> i 
+	    					<span class='text-danger'><b>=</b></span> 
+	    					<span class='text-warning'><b>0</b></span>;
+	    				<br>
+	    				&nbsp; &nbsp; &nbsp; &nbsp;
+	    					while (i < arr.length) {
+	    				<br>
+	    				&nbsp; &nbsp; &nbsp; &nbsp;
+	    				&nbsp; &nbsp; &nbsp; &nbsp;
+		    				let size = Math.ceil( (arr.length - i) / n-- );
+		    			<br>
+		    			&nbsp; &nbsp; &nbsp; &nbsp;
+		    			&nbsp; &nbsp; &nbsp; &nbsp;
+		    				out.push( arr.slice(i, i += size) );
+		    			<br>
+		    			&nbsp; &nbsp; &nbsp; &nbsp;
+	    					}
+	    				<br>
+	    				&nbsp; &nbsp; &nbsp; &nbsp;
+	    					return out;
+	    				<br>
+						}
+						<br>
+					</div>
+				</div>
+	
+				<br>
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+
+						/*<br>
+						* Generate K-Fold subset Datasets <br>
+						*/<br>
+						function getKFolds(dataset, k){<br>
+						&nbsp; &nbsp; &nbsp; &nbsp;
+							shuffle(dataset)<br>
+						&nbsp; &nbsp; &nbsp; &nbsp;
+							let kFolds = chunkify(dataset, k);<br>
+						&nbsp; &nbsp; &nbsp; &nbsp;
+							return kFolds;<br>
+						}<be>
+					</div>
+				</div>
+				
+				
+
+			</div>
+		</div>
+	</div>
+<!-- 4. DATASET END-->
+
+<!-- 
+
+Dataset Description
+The given data has 517 instances – each data point is 12 dimensional and the output column (13th column) is the burned area given in hectors (ha). The features or attributes including the output (burned) “area” are: 		
+Table goes here
+	
+Dataset Formatting:
+convert from csv into json
+The initial dataset is in csv format. Since the target platform is the browser application,  converted into a JSON format. Thus each row will be converted into a key-value object, and all the rows contained within an array.	See. data.json for converted data			
+					
+Training/Testing Strategy: 
+define metric for comparisons: training (used) vs testing (not used)
+k-fold validation
+You typically need a dataset to train your predictor, and another to test your predictor.
+Test data is not separately provided; therefore, you will apply 10-fold cross-validation (FCV). 
+				
+Dataset considerations/preparations
+
+JS Implementations
+			
+normalization (scale numbers down for efficiency) in JS
+
+//Step 1: Normalize dataset with values between 0 to 1.
+const normalize = (val, min, max) => (val - min)/(max - min);
+
+const normalize_feature = function(dataset, feature){
+	let max = d3.max(dataset, d => d[feature] );
+    let min = d3.min(dataset, d => d[feature] );
+    dataset.forEach( d => d[feature] = normalize( d[feature], min, max) );
+}
+
+const normalize_dataset = function(dataset, featureList){
+	featureList.map( feature => normalize_feature(dataset, feature) );
+}
+
+
+
+
+outlier removal (does it matter or not? ) in JS
+Check older build (add in future build)
+
+Balancing Folds in JS 
+Notes: detail how I performed this in Javascript such that it can execute in browser runtime environment. Note, balanced chunkings of dataset, such that minimal discrepancy for any one dataset is at most 1 row.
+
+
+/**
+ * Shuffles array in place. ES6 version
+ * @param {Array} a items An array containing the items.
+ */
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+
+function chunkify(arr, n) {
+    let out = [];
+    let i = 0;
+    while (i < arr.length) {
+	    let size = Math.ceil( (arr.length - i) / n-- );
+	    out.push( arr.slice(i, i += size) );
+    }
+    return out;
+}
+
+/*
+* Generate K-Fold subset Datasets 
+*/
+function getKFolds(dataset, k){
+	shuffle(dataset)
+	let kFolds = chunkify(dataset, k);
+	return kFolds;
+}
+
+/*flattens a multi-dimensional array into a 1d array*/
+flatten = (arr) => [].concat(...arr);
+
+/*get all subsets data, not including the testing set*/
+getTraining = (arr, test) => flatten( arr.filter( d => d !== test ));
+
+
+
+-->
+
+
+<hr>
+
+<!-- 5. ALGORITHM START-->
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-6'>
+				<h2>4. Approach</h2>
+			</div>
+			<div class='col-6 text-right'>
+				<button class="btn btn-primary btn-sm" 
+						type="button" 
+						data-toggle="collapse" 
+						data-target="#collapseAlgo" 
+						aria-expanded="false" 
+						aria-controls="collapseAlgo">
+							Show	
+				</button>
+			</div>
+		</div>
+		<div class="collapse show" id="collapseAlgo">
+			<p class='text-secondary lead'>
+				<i>This section details the initial considerations in constructing a predictor and why a regression model is suitable choice.
+				</i>
+			</p>
+			<div class='container'>
+				<h4>Supervised Learning</h4>
+				<p>
+					Build a predictor with data that is known. 	
+				</p>
+				<h4>Regression Model</h4>
+				<p>	
+					Math behind is point-intercept form.
+				</p>
+				<p>
+					Machine Learning Selection:<br>
+					Supervised learning approach<br>
+					Linear regression technique.<br>
+					Given the data as independent set of inputs/variables/features.<br>
+					We can create output in form of a point-slope equation.<br>
+					That will serve as our predictor.<br>
+
+					Considerations:<br>
+				</p>
+		
+				<!-- 
+					Supervised Learning 
+					Build a predictor with data that is known.
+					Within the field of machine learning, there are two main types of tasks: supervised, and unsupervised. Since the dataset contains the historical values for what we want to predict, then we may adopt a supervised learning approach. This allows us to train a predictor on historical data, then test it on other data to see how well it predicts.  
+
+					Linear Regression Modeling
+					Motivation:Supervised learning approach: Regression Model
+					Motivation
+					There are many approaches that can be taken to create a predictor. Essentially, what we want to accomplish is given some set of facts decide how destructive of a forest fire may occur.  Now we must select the facts that correlate to forest fires.
+
+					Basic Idea: Math behind is point-intercept form.
+					Given the data as independent set of inputs/variables/features. We can create output in form of a point-slope equation. That will serve as our predictor.
+
+					Generalized Form:  Y = B + bx + bx + bx … + bx
+					where each x-term in a feature in the dataset.
+
+					Linear Algebra:  Y = XTB
+
+					Goal: In order to use x terms to predict the y-term, must find the b terms coefficients that provide a scaling/weighting to each input. Some inputs are more important than others, so the first step in determining the B-terms is to evaluate and rank which features are more correlated to the y-term, than others.
+
+					Considerations:
+					Add introduction about this homework problem and the associated dataset and the motivation for applying machine learning to this project to build a predictor.
+				-->
+			</div>
+		</div>
+	</div>
+<!-- 5. ALGORITHM END-->
+
+<hr>
+
+<!-- 6. FEATURE START-->
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-6'>
+				<h2>5. Feature Ranking</h2>
+			</div>
+			<div class='col-6 text-right'>
+				<button class="btn btn-primary btn-sm" 
+						type="button" 
+						data-toggle="collapse" 
+						data-target="#collapseFeature" 
+						aria-expanded="false" 
+						aria-controls="collapseFeature">
+							Show	
+				</button>
+			</div>
+		</div>
+		<div class="collapse show" id="collapseFeature">
+			<p class='text-secondary lead'>
+				<i>Feature evaluations. </i>
+			</p>
+			<div class='container'>
+				<h4><b>Metrics</b></h4>
+				<p>
+					Feature Selections<br>
+					define metric for comparisons<br>
+					measuring correlation, what is it, (not causation, don't care why)<br>
+					quantitative vs qualitative<br>
+					quantitative (continuous) → PCC -1 to 1 but abs(0,1)<br>
+					qualitative →  non-uniform distributions 0-1<br>
+					Thus they are in same scope, so similar metrics, and thus may be related, measured against one another<br>
+
+					{from white board}:<br>
+					discriminate/id the qualitative vs quantitative data<br>
+					Find correlation between input and outputs<br>
+					Rank features using a metric<br>
+						Quantitative: PCC<br>
+						Qualitative: % occurence<br>
+
+					Data visualization considerations<br>
+					Table 1 ranking of correlations<br>
+					Graph-1 12 scatter plots showing correlation between features/result<br>
+				</p>
+
+
+				<div>
+					<h2>Rank the Features</h2>
+					<p>
+						Rank the features by computing the correlation between <i>i</i> and <i>j</i>,
+						where <i>i</i> is any one of the features from 1 to 12, and <i>j</i> = 13<sup>th</sup> feature.
+						Computed all the 12 correlation values and place them in <b>Table #1</b>
+						[Feature id (1 to 12), correlation value] in descending order of the absolute value of the correlation, in your report. Plot the correlation graphs (<b>Graphs #1 to 5</b>) for the top 5 input features. 
+					</p>
+
+					<p style='color:red; background-color:yellow;'>
+						Strategy: separate features into qualitative and quantative data.
+						qualitative features: X, Y, day, month.
+						quantative features: FFMC, DMC, DC, ISI, temp, RH, wind, rain.
+						To determine correlation: Pearson Correlation Coefficent.
+						We need a metric by which to correlate all 12 features.
+						some features are continuous and some discrete, how do we determine correlation together?
+						Discuss best approach to convert catagorical data into a mode that fits a linear regression model.
+						<br></br>
+						<b>#TODO</b> Analyze dataset, look at spread and variance. Determine outliers.
+						Show min value, max value, frequency of each value.
+						Give option to remove outliers from dataset.
+						<br></br>
+						<b>#TODO:</b> Add options to remove outliers from data evaluating the mean, std and recalculate on graphs and results on the fly, the features and the scatter plots to better identify the correlations in better resolution and realtime.
+						<br></br>
+						<b>TODO:</b> Add line regression on scatter plots, options to toggle trace on/off, remove outlier, etc. each user selection should automatically update the graphics.
+						<br></br>
+						<b>#TODO:</b> add collapse button to hide/show the scatter plots. Zoom option to show graph bigger too.
+						<br></br>
+						<b>#TODO:</b> change the way I evaluate the month, day, X, Y as I use arbitray numbering for it.
+						Use a probablistic approach.
+					</p>
+
+
+					<!-- Feature Correlation Table-->
+					<div class='container'>
+						<div>
+							<h4>
+								<span class='lead text-secondary'>Table-1:</span> 
+								<span class='text-primary'>Feature Evaluations:</span> 
+								<span class='lead text-primary'> <i>Ranked by Correlations to Burned Area</i></span>
+							</h4>
+							<table class="table table-sm" id="pcc">
+							  <thead>
+							    <tr>
+							      <th scope="col">Rank</th>
+							      <th scope="col">Feature</th>
+							      <th scope="col">Target</th>
+							      <th scope="col">Correlation</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+						
+							  </tbody>
+							</table>
+						</div>
+					</div>
+
+
+					<!-- Scatter Plots for each X feature to Y result -->
+					<h4>
+						<span class='lead text-secondary'>Graphs 1-12:</span> 
+						<span class='text-primary'>Feature Evaluations:</span> 
+						<span class='lead text-primary'> <i>Show Correlations between Feature & Burned Area</i></span>
+					</h4>
+
+					<div class='border'>
+						<div class='text-center text-secondary bg-light border'>
+							<span><b><i>Plot Options:</i></b> 
+								<span class='text-danger'><b>All Data</b></span> | Remove Outliers
+							</span>
+						</div>
+
+						<div>
+							<svg id="X-Area" width="300" height="300"></svg>
+							<svg id="Y-Area" width="300" height="300"></svg>
+							<svg id="Month-Area" width="300" height="300"></svg>
+							<svg id="Day-Area" width="300" height="300"></svg>
+							<svg id="FFMC-Area" width="300" height="300"></svg>
+							<svg id="DMC-Area" width="300" height="300"></svg>
+							<svg id="DC-Area" width="300" height="300"></svg>
+							<svg id="ISI-Area" width="300" height="300"></svg>
+							<svg id="Temp-Area" width="300" height="300"></svg>
+							<svg id="RH-Area" width="300" height="300"></svg>
+							<svg id="Wind-Area" width="300" height="300"></svg>
+							<svg id="Rain-Area" width="300" height="300"></svg>
+						</div>
+					</div>
+
+				</div>
+
+				<br>
+				<!-- CODE-->
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+						/** Compute Pearson's correlation coefficient */<br>
+						var computePearsons = function (arrX, arrY) {<br>&nbsp; &nbsp; &nbsp; &nbsp; 
+						    var num = covariance(arrX, arrY);<br>&nbsp; &nbsp; &nbsp; &nbsp; 
+						    var denom = d3.deviation(arrX) * d3.deviation(arrY);<br>&nbsp; &nbsp; &nbsp; &nbsp; 
+						    return num / denom;<br>
+						}<br>
+					</div>
+				</div>
+
+				<br>
+
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+						/** Computes the covariance between random variable observations<br>
+						 * arrX and arrY<br>
+						 */<br>
+						var covariance = function (arrX, arrY) {<br>&nbsp; &nbsp; &nbsp; &nbsp;
+						    var u = d3.mean(arrX);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+						    var v = d3.mean(arrY);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+						    var arrXLen = arrX.length;<br>&nbsp; &nbsp; &nbsp; &nbsp;
+						    var sq_dev = new Array(arrXLen);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+						    var i;<br>&nbsp; &nbsp; &nbsp; &nbsp;
+						    for (i = 0; i < arrXLen; i++)<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+						        sq_dev[i] = (arrX[i] - u) * (arrY[i] - v);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+						    return d3.sum(sq_dev) / (arrXLen - 1);<br>
+						}
+					</div>
+				</div>
+
+				<br>
+
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+						/* Get all the values from a column in a dataset */<br>
+						var getFeatureData = function(dataset, feature){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							return dataset.map( d => d[feature]);<br>
+						}
+					</div>
+				</div>
+
+				<br>
+
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+						var getPCC = function(dataset, feature, index){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let x = getFeatureData(dataset, feature);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let y = getFeatureData(dataset, 'area')<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let result = computePearsons(x,y);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							return result;<br>
+						}
+					</div>
+				</div>
+
+				<br>
+
+
+
+
+
+<!--
+/** Compute Pearson's correlation coefficient */
+var computePearsons = function (arrX, arrY) {
+    var num = covariance(arrX, arrY);
+    var denom = d3.deviation(arrX) * d3.deviation(arrY);
+    return num / denom;
+}
+
+/** Computes the covariance between random variable observations
+ * arrX and arrY
+ */
+var covariance = function (arrX, arrY) {
+    var u = d3.mean(arrX);
+    var v = d3.mean(arrY);
+    var arrXLen = arrX.length;
+    var sq_dev = new Array(arrXLen);
+    var i;
+    for (i = 0; i < arrXLen; i++)
+        sq_dev[i] = (arrX[i] - u) * (arrY[i] - v);
+    return d3.sum(sq_dev) / (arrXLen - 1);
+}
+
+/*
+* Get all the values from a column in a dataset
+*/
+var getFeatureData = function(dataset, feature){
+	return dataset.map( d => d[feature]);
+}
+
+var appendPCCTable = function(index, feature, result, pcc)
+{
+	let table = document.getElementById('pcc');
+	table.innerHTML += 
+    `<tr>
+      <th scope="row">${index}</th>
+      <td>${feature}</td>
+      <td>${result}</td>
+      <td>${pcc}</td>
+    </tr>`;
+}
+
+var getPCC = function(dataset, feature, index)
+{
+	let x = getFeatureData(dataset, feature);
+	let y = getFeatureData(dataset, 'area')
+	let result = computePearsons(x,y);
+	//console.log( feature +', area: '+ result)
+	appendPCCTable(index+1, feature, 'area', result.toFixed(4) );
+}
+
+var compare = function(a,b)
+{
+	let x1 = getFeatureData(dataset, a);
+	let x2 = getFeatureData(dataset, b);
+	let y = getFeatureData(dataset, 'area');
+	let result1 = computePearsons(x1, y);
+	let result2 = computePearsons(x2, y);
+	return (Math.abs(result2) - Math.abs(result1));
+}
+/*******************************************************************/
+/*******************************************************************/
+/*******************************************************************/
+
+var inputs = ['X','Y','month','day','FFMC','DMC','DC','ISI','temp','RH','wind','rain'];
+var outputs = ['area'];
+
+inputs.sort( (a, b) => compare(a,b) )
+inputs.forEach( (feature, index) => getPCC(dataset, feature, index) ) 
+
+
+-->
+
+
+
+			</div>
+		</div>
+	</div>
+<!-- 6. FEATURE END-->
+
+<hr>
+
+<!-- 7. GENERATE START-->
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-6'>
+				<h2>6. Generate Models</h2>
+			</div>
+			<div class='col-6 text-right'>
+				<button class="btn btn-primary btn-sm" 
+						type="button" 
+						data-toggle="collapse" 
+						data-target="#collapseGenerate" 
+						aria-expanded="false" 
+						aria-controls="collapseGenerate">
+							Show	
+				</button>
+			</div>
+		</div>
+		<div class="collapse show" id="collapseGenerate">
+			<p class='text-secondary lead'>
+				<i>This section provides interactive tools to generate regression models then explains how they are built</i>
+			</p>
+			<div class='container'>
+
+				<div>
+					<!-- Model Builder-->
+				
+					<!--
+					<p style='color:red; background-color: yellow;'>
+						<b>#TODO:</b> Show code for these caluclations for generating the model. Cite tools and libraries used.
+						<br></br>
+						<b>#TODO:</b> Add interactive buttons that run the models of each polynomial type and populates results. Also gives user options to select which features to include to linear model. Whenever an option is selected, add that polynomial+featureset to evaluation/error report which is ranked. rerunning with same criteria can move a model up/down from the report. only one model at a time. 
+					</p>
+					-->
+
+					<!--Default Regression Models -->
+					<div class='container-fluid'>
+						<h2>Generate Regression Models</h2>
+						<p>
+							Here are some suggested regression models that may be used as baseline models for comparators.
+							They have been pre-configured and may be generated. Feel free to generate all of these default
+							regression models. Note that the higher-order models may take a few minutes to build, and that this web application will become inactive during the build process. 
+						</p>
+					</div>
+				</div>
+
+
+
+				<div class='container-fluid bg-light'>
+					<h4 class='lead text-danger text-center'>Interactive Predictor Generator</h4>
+					<div class='row'>
+						<div class='col-3'>
+							<div class="form-group">
+								<label for="poly-order"><b>Polynomial Order</b></label>
+								<select class="form-control" id="model-order">
+									<option value="1">1<sup>st</sup> order Polynomial</option>
+									<option value="2">2<sup>nd</sup> order Polynomial</option>
+									<option value="4">4<sup>th</sup> order Polynomial</option>
+									<option value="6">6<sup>th</sup> order Polynomial</option>
+									<option value="8">8<sup>th</sup> order Polynomial</option>
+								</select>
+							</div>
+						</div>
+						<div class='col-3'>
+							<div class="form-group">
+								<label for="feature-selection"><b>Feature Selection</b></label>
+								<select class="form-control" id="feature-selection">
+									<option value='ALL'>All 12 Features</option>
+									<option value='TOP5'>Top 5 Features</option>
+								</select>
+							</div>
+						</div>
+						<div class='col-3'>
+							<div class="form-group">
+								<label for="regularization-selection"><b>Regularization</b></label>
+								<select class="form-control" id="regularization-selection">
+									<option value='0'>0</option>
+									<option value='0.5E-8'>0.5E-8</option>
+									<option value='1.5E-6'>1.5E-6</option>
+									<option value='2.0E-4'>2.0E-4</option>
+									<option value='1'>1</option>
+									<option value='2'>2</option>
+								</select>
+							</div>
+						</div>
+						<div class='col-3 mt-2 text-center'>
+							<button class='btn btn-block btn-success mt-4 border' id='model-generator'> Generate Model</button>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- List of generated models-->
+				<div class='container-fluid'>
+					<h4>Models Generated:</h4>
+					<ul class='border py-2 my-2' id='generated-models-list'>
+						<li class='text-danger'>No models are currently generated.</li>
+					</ul>
+				</div>
+
+				<div class='container-fluid m-1 p-2' >
+					<h4>Instructions</h4>
+					<p>
+						Select features from feature list and select a polynomial order.
+						Then press build and see how your model compares.
+
+						This is an interactive regression generator, that builds various linear models of each polynomial type and then populates results in the tables and graphs in the following sections. Customizable options are provided for: model order, feature list, and regularization. Whenever a model is generated, its performance is automatically evaluated and ranked on the error report on table-2: Model Evaluations. It is possible to generate many models with identical selections, which may result in different errors, all of these will appeat in the tables and graphs. 
+					</p>
+				
+				</div>
+
+				<h4>Model Prediction Explained</h4>
+					<p>
+						Models or learners will be generated using the non-iterative equation,
+						$$\beta = \text{inv}(X'*X)*X'*Y$$ 
+						with customizable options:
+							<ul compact> 
+								<li><b>Models of order</b>: M=1,2,4,6,8</li>
+								<li><b>Features</b> including: 
+									<ul compact>
+										<li>(a) all the 12 input features</li>
+										<li>(b) top 5 input features</li> 
+									</ul>
+								</li>
+								<li><b>Regularization:</b> 0, 0.5E-8, 1.5E-6, 2.0E-4,1, 2</li>
+							</ul>
+						and then display the model's performance results in <a href='#table-2'><b>Table-2: Model Evaluations</b>.</a>
+					</p>
+
+				<!--
+				<p style='color:red; background-color: yellow;'>
+					<b>#TODO</b> Create list of models built, assocaited with it, expand out to show
+					beta values, 10 fold error calculations. this should all collapse down to model
+					while has polynomial order and feature list.
+					<br></br>
+					underneath should be a table with all tables of generated models
+					<br></br>
+					generate error graphs for each model built, this includes the base models
+					and then all the custom built models
+				</p>
+				-->
+
+				<div>
+					<h4>Compute B Vector</h4>
+					<p>$\beta = \text{inv}(X'*X)*X'*Y$</p>
+				</div>
+
+				<!-- CODE -->
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+						const make_model = function(dataset, yValue, featureList, model_order){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let Y = getY(dataset, yValue);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let X = getX(dataset, featureList, model_order);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let B = getB(X,Y);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let model = {<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+								'B': B,<br> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+								'order': model_order,<br> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+								'features': featureList,<br> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+								'yLabel': yValue, <br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+								'name': 'M'+model_order<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+							};<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							return model;<br>&nbsp; &nbsp; &nbsp; &nbsp;
+						}
+					</div>
+				</div>
+
+				<br>
+
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+						/* get Y Vector */<br>
+						const getY = (dataset, yVal) => math.matrix( dataset.map(d => d[yVal]) );
+					</div>
+				</div>
+
+				<br>
+
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+						/* Get X Matrix */<br>
+						const getX = function(dataset, featureList, model_order){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let arrays = [];<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let x0 = new Array( dataset.length ).fill(1)<br> &nbsp; &nbsp; &nbsp; &nbsp;
+							arrays.push( x0)<br> &nbsp; &nbsp; &nbsp; &nbsp;
+							for (let feature of featureList){<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+								for (let pow=1; pow<=model_order; pow++){<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									arrays.push( (dataset.map( d => d[feature])).map(x => x**pow)  );<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+								}<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							}<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let X = math.chain(arrays)<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+										.matrix()<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+										.transpose()<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+										.done();<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							return X;<br>
+						}<br>
+					</div>
+				</div>
+
+				<br>
+
+				<div class='bg-dark container text-light'>
+					<div class='pl-3 pt-2 pb-2'>
+						/* Get B Vector (i.e. coefficients) where: B = inv(X'*X)*X'*Y */<br>
+						const getB = function(X,Y){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							let B = math.chain(X)<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									.transpose()<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									.multiply(X)<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									.inv()<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									.multiply(math.transpose(X))<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									.multiply(Y)<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									.done()<br>
+									<br>&nbsp; &nbsp; &nbsp; &nbsp;
+							return B;<br>
+						}
+					</div>
+				</div>
+
+				<br>
+
+
+
+
+
+		
+
+				<!-- CODE END-->
+
+
+
+
+
+
+				<!-- Table of Beta Terms in Regression Model-->
+				<!--
+				<p style='color:red; background-color: yellow;'>
+					<b>#TODO:</b> Make table with columns with all 10 folds then highlight best fold, 
+					for each model: ie combo of polynomial + input features. 
+					This table should be collapsible 
+				</p>
+				-->
+				<div class='container-fluid'>
+					<div class='row'>
+						<div class='col-6'>
+							<h4>Regression Model</h4>
+						</div>
+						<div class='col-6 text-right'>
+							<button class="btn btn-primary btn-sm" 
+								type="button" 
+								data-toggle="collapse" 
+								data-target="#collapseBetaTerms" 
+								aria-expanded="false" 
+								aria-controls="collapseBetaTerms">
+									Show Model	
+							</button>
+						</div>
+					</div>
+					<div class="collapse" id="collapseBetaTerms">
+						<table class="table" id="m1">
+						  <thead>
+						    <tr>
+						      <th scope="col">#</th>
+						      <th scope="col">Feature</th>
+						      <th scope="col">$\beta$</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+					
+						  </tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+<!-- 7. GENERATE END-->
+
+<hr>
+
+<!-- 8. ERROR START-->
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-6'>
+				<h2>7. Model Ranking</h2>
+			</div>
+			<div class='col-6 text-right'>
+				<button class="btn btn-primary btn-sm" 
+						type="button" 
+						data-toggle="collapse" 
+						data-target="#collapseError" 
+						aria-expanded="false" 
+						aria-controls="collapseError">
+							Show	
+				</button>
+			</div>
+		</div>
+		<div class="collapse show" id="collapseError">
+			<p class='text-secondary lead'>
+				<i>Model evaluation</i>
+			</p>
+			<div class='container'>
+				<h4><b>Metrics</b></h4>
+				<p>
+					Model Selections<br>
+					define metric for comparison<br>
+					may build unlimited number of models, how to decide which is best?<br>
+
+					Generate Models<br>
+					Table 2- List of generated models<br>
+
+					Describe process/details<br>
+					Describe options<br>
+						poly selection<br>
+						feature selection<br>
+						may generate multiple of same model <br>
+					why? → variance/spread of general error<br>
+					give math behind models → hide<br>
+					give code behind models → hide<br>
+
+						compare them to one another see which has best prediction or least error<br>
+						MAE<br>
+						MRSE<br>
+						k-fold cross validation allows us to test multiple times and find general error<br>
+						
+						Data visualization considerations<br>
+							Table-3 - Interactive Table, sorting columns, hide/display all folds data<br>
+					Graph-2 Interactive Plots show error for each model using features as key<br>
+					X-axis → model order<br>
+					Y-axis → error rate (Mae, Mrse)<br>
+					 
+
+					Table-3 Collapsable <br>
+				</p>
+
+				<!-- Model Performance & Error Evaluation-->
+				<div class='container-fluid'>
+					<h4>Performance Evaluation and Error Calculation</h4>
+					<p>
+						We will evaluate the perfomance of each of the models by computing mean-absolute-error (MAE) and root-mean-squared-error (RMSE). MAE and RMSE are computed as:
+					</p>
+					<p>
+						$$MAE = {1 \over N}\sum_{i=1}^N | \text{y}_i - \hat{\text{y}}_i |$$
+						$$RMSE = \sqrt{ \sum_{i=1}^N ( \text{y}_i - \hat{\text{y}}_i )^2 / N }$$
+					</p>
+					<!--
+					<p style='color:red; background-color: yellow;'>
+						<b>#TODO:</b> Show how this calculation is made in javascript
+					</p>
+					-->
+
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							const calculateResidual = function(Y, X, B){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let XtB = math.chain(X)<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+										.multiply(B)<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+										.done();<br>
+										<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								return math.subtract(Y, XtB).toArray();<br>
+							}
+						</div>
+					</div>
+
+					<br>
+
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							const calculateMAE = function(Y, X, B){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let residual = calculateResidual(Y, X, B);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let n = residual.length;<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let rsa = residual.reduce( (total, item) => total += Math.abs(item)  )<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								return rsa/n<br>
+							}
+						</div>
+					</div>
+
+					<br>
+
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							const calculateRSME = function(Y, X, B){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let residual = calculateResidual(Y, X, B);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let n = residual.length;<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let rss = residual.reduce( (total, item) => total += item**2  )<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								return Math.sqrt( (rss/n) )<br>
+							}
+						</div>
+					</div>
+
+					<br>
+
+					<h4>Ten-Fold Cross Validation</h4>
+
+					
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							/*get all subsets data, not including the testing set*/<br>
+							getTraining = (arr, test) => flatten( arr.filter( d => d !== test ));<br>
+						</div>
+					</div>
+
+					<br>
+
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							/*flattens a multi-dimensional array into a 1d array*/<br>
+							flatten = (arr) => [].concat(...arr);<br>
+						</div>
+					</div>
+
+					<br>
+
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							/*Train Model*/<br>
+							const crossValidation = function(dataset, featureList, model_order, yValue){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let fold10 = getKFolds(dataset, 10);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let results = [];<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let model;<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								for(i in fold10 ){<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									let testingData = fold10[i];<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									let trainingData = getTraining(fold10, testingData)<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									model = trainRegressionModel(trainingData, featureList, model_order, yValue);<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									let error = testRegressionModel(testingData, model);<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+									results.push(error)<br>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+								}<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								return model;
+
+							}
+						</div>
+					</div>
+
+					<br>
+					
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							const trainRegressionModel = function(trainingData, featureList, model_order, yValue){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let model = make_model(trainingData, yValue, featureList, model_order);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								return model;<br>
+							}
+						</div>
+					</div>
+
+					<br>
+
+					<div class='bg-dark container text-light'>
+						<div class='pl-3 pt-2 pb-2'>
+							var testRegressionModel = function(testingData, model){<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let testingY = getY(testingData, model.yLabel);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let testingX = getX(testingData, model.features, model.order);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let rsme = calculateRSME(testingY, testingX, model.B);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								let mae = calculateMAE(testingY, testingX, model.B);<br>&nbsp; &nbsp; &nbsp; &nbsp;
+								return {'rsme':rsme, 'mae': mae};<br>
+							}
+						</div>
+					</div>
+
+
+					<p>
+						For each Model (M=1...6, YC) <b>Table #2</b> will have M=<i>i</i>, average (avg) and
+						standard deviation (SD) of MAE of the 10FCV, avg., and SD of RMSE of the 10FCV in each row -
+						 in the experiment all the 12 input features will be included. Include <b>Table #2</b> in your
+						 report. Now use the top 5 input features for your experiment and similarly generate <b>Table #3</b>.
+					</p>
+
+					<div class='container'>
+						<h4>
+							<a name='table-2'><span class='lead text-secondary'>Table-2:</span> </a>
+							<span class='text-primary'>Model Evaluations<span> 
+						</h4>
+
+						<table class="table table-hover text-center" id="model-evaluations-table" data-link="row">
+						  <colgroup>
+						  	<col span='1' id='modelColumn'></col>
+						  	<col span='1'></col>
+						  	<col span='1' id='errorColumn'></col>
+						  </colgroup>
+
+						  <thead>
+						    <tr>
+						      <th scope="col" id='col-model'>Model</th>
+						      <th scope="col" id='col-avg-mae'>Average (MAE)</th>
+						      <th scope="col" id='col-std-mae'>Std Dev (MAE)</th>
+						      <th scope="col" id='col-avg-rmse'>Average (RMSE)</th>
+						      <th scope="col" id='col-std-rmse'>Std Dev (RMSE)</th>
+						      <th></th>
+						    </tr>
+						  </thead>
+						  <tbody id='model-evaluations-entries'>
+						  </tbody>
+						</table>
+					</div>
+
+
+					<div>
+						<p>
+							<b>Plots:</b> Plot <b>Graph#6</b> and <b>Graph#7</b> for: (a) Models (M=1...6, YC) versus MAE,
+							(b) Models (M=1...6, YC) versus RMSE where the models were trained using 12 input features.
+							Similarly, provide <b>Graph#8</b> and <b>Graph#9</b> for models those are built using top 5
+							input features only.
+						</p>
+
+						<!--<h4 style='color:red; background-color:yellow;'>Graph#6: (12 feature) Models vs MAE</h4>-->
+						
+						<h4>
+							<span class='lead text-secondary'>Graph-13:</span> 
+							<span class='text-primary'>Models vs. MAE<span> 
+							<span class='lead text-primary'>(Error Plots)<span> 
+						</h4>
+						<div class='border p-2 my-2'>
+							<!-- Scatter Plots for each X feature to Y result -->
+							<div id='mae-plot-container'>
+								<!--<svg id="model-mae" width="500" height="500"></svg>-->
+								No models exists to show error. 
+							</div>
+						</div>
+
+						<!--<h4 style='color:red; background-color:yellow;'>Graph#7: (12 feature) Models vs RMSE</h4>-->
+						<h4>
+							<span class='lead text-secondary'>Graph-14:</span> 
+							<span class='text-primary'>Models vs. RMSE<span> 
+							<span class='lead text-primary'>(Error Plots)<span> 
+						</h4>
+						<div class='border p-2 my-2'>
+							<div id='rmse-plot-container'>
+								No models exists to show error.
+								<!--<svg id="model-rmse" width="500" height="500"></svg>-->
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+<!-- 8. ERROR END-->
+
+<hr>
+
+<!-- 9. REGULARIZATION START-->
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-6'>
+				<h2>8. Model Regularization</h2>
+			</div>
+			<div class='col-6 text-right'>
+				<button class="btn btn-primary btn-sm" 
+						type="button" 
+						data-toggle="collapse" 
+						data-target="#collapseRegularization" 
+						aria-expanded="false" 
+						aria-controls="collapseRegularization">
+							Show	
+				</button>
+			</div>
+		</div>
+		<div class="collapse show" id="collapseRegularization">
+			<p class='text-secondary lead'>
+				<i>Regularization</i>
+			</p>
+			<div class='container'>
+				<h4><b>Metrics</b></h4>
+				<p>
+					Regularization<br> 
+					Motive: High polynomial models<br>
+					define metric for comparison: lambda<br>
+				</p>
+
+				<div class='container-fluid'>
+					<h1>PART (B)</h1>
+					<div>
+						<h2>Regularization:</h2>
+						<p>
+							For a model of order M=6 and YC, you need to apply the regularization using the non-iterative
+							equation: $\beta = \text{inv}(\mathbf{X}^T\mathbf{X}+\lambda M_{\lambda})^{-1} \mathbf{X}^T\mathbf{y}$, where $M_{\lambda}$ is the identity matrix with $M_{\lambda}(1,1)=0$,
+							and <i>lambda</i> ($\lambda$) is the regularization parameter. Compute the models for,
+							$\lambda=$ (a) 0 (which you have already computed in PART(A)), (b) 0.5E-8, (c)1.5E-6,
+							(d)2.0E-4, (e) 1 and (f) 2. Compute the <i>Errors</i> as we have done in PART(A) and plot for 
+							"$\lambda$ versus the MAE" and "$\lambda$ versus RMSE" for both 12 input features as well as
+							5 top input-features based models as we have done in PART(A).
+						</p>
+						<p>
+							<i>Important Note:</i> you may need to apply $ln \lambda$ along the x-axis for plotting as well
+							as you may need to do the same along the y-axis.
+						</p>
+					</div>					
+				</div>
+
+
+
+			</div>
+		</div>
+	</div>
+<!-- 9. REGUARIZATION END-->
+<hr>
+<!-- A. CONCLUSION START-->
+	<div class='container-fluid'>
+		<div class='row'>
+			<div class='col-6'>
+				<h2>9. Closing</h2>
+			</div>
+			<div class='col-6 text-right'>
+				<button class="btn btn-primary btn-sm" 
+						type="button" 
+						data-toggle="collapse" 
+						data-target="#collapseClosing" 
+						aria-expanded="false" 
+						aria-controls="collapseClosing">
+							Show	
+				</button>
+			</div>
+		</div>
+		<div class="collapse show" id="collapseClosing">
+			<p class='text-secondary lead'>
+				<i>Closing</i>
+			</p>
+		</div>
+	</div>
+<!-- A. CONCLUSION END-->
+<hr>
+
+	
+	
+
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="scripts/init_dataset.js"></script>
+ 
+ 	<!-- visualizations -->
+    <script src="scripts/visualizations/scatterplot.js" charset="utf-8"></script>
+    <script src="scripts/visualizations/data_table.js"></script>
+
+    
+
+	<!-- ML processing -->
+	<script src="scripts/pcc.js"></script>
+	<script src="scripts/model_prediction.js"></script>
+	<script src="scripts/kfold.js"></script>
+	<script src="scripts/feature_ranking.js"></script>
+	<script src="scripts/model_generator.js"></script>
+
+
+	 <script src="scripts/visualizations/error_plots.js"></script>
+	 <!-- Test to get bar chart working-->
+	 <script src="scripts/visualizations/barchart.js"></script>
+
+
+	<!-- Bootstrap JS -->
+	<script src="./scripts/bootstrap/jquery-3.2.1.min.js"></script>
+    <script src="./scripts/bootstrap/popper.min.js"></script>
+    <script src="./scripts/bootstrap/bootstrap.min.js"></script>
+
+</body>
+</html>

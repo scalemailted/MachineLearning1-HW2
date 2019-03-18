@@ -1,0 +1,37 @@
+tr[aria-expanded=true] td .fa-chevron-right {
+   display: none;
+}
+tr[aria-expanded=false] td .fa-chevron-down {
+   display: none;
+}
+
+
+.borderless table tr{
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+}
+
+colgroup col {
+  /*border-left: 1px solid #ccc;*/
+  
+}
+
+#modelColumn {
+	background: #D8D8D8;
+	border-right: 1px solid #ccc;
+}
+
+#errorColumn {
+	border-right: 1px solid #ccc;
+}
+
+/*
+.table th {
+    border: 0;
+}
+*/
+
+#model-evaluations-table  thead tr th:hover { color: red !important; } /*font-size:12pt !important; }*/
+/*table thead tr th:hover { color: red !important; } */
