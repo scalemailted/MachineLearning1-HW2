@@ -10,7 +10,7 @@ https://github.com/scalemailted/MachineLearning1-HW2
 #TODO:
 Introduction:
 This project completes all of the core specifications within the assignment,
-It provides an interative tools to generate regression models and then evaluate them with tables and graphs
+It provides an interactive tools to generate regression models and then evaluate them with tables and graphs
 
 For any questions:
 contact: eholmber@uno.edu

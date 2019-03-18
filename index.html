@@ -815,7 +815,7 @@ getTraining = (arr, test) => flatten( arr.filter( d => d !== test ));
 
 
 				<div>
-					<h2>Rank the Features</h2>
+					<h4>Rank the Features</h4>
 					<p>
 						Rank the features by computing the correlation between <i>i</i> and <i>j</i>,
 						where <i>i</i> is any one of the features from 1 to 12, and <i>j</i> = 13<sup>th</sup> feature.
@@ -823,6 +823,48 @@ getTraining = (arr, test) => flatten( arr.filter( d => d !== test ));
 						[Feature id (1 to 12), correlation value] in descending order of the absolute value of the correlation, in your report. Plot the correlation graphs (<b>Graphs #1 to 5</b>) for the top 5 input features. 
 					</p>
 
+					<h4>Metric: Correlation, not Causation</h4>
+					<p>
+						A powerful concept that drives these regression models, is that the machine does not need to know why two features may correlate in some way, that just when they do, we can use that observation to build a predictor. It is not a claim that feature A causes result B to occur. But rather, when feature A occurs, then we can expect this result B to likely occur. This frees us from the burden of justifying causation. In this way, we can be agnostic to what the features mean at all, and instead just focus on the patterns they produce as the tool to build a predictor.  This ability to remove the context of knowledge from the problem allows this process to be automated into a computational endeavor.  
+					</p>
+
+
+					<h4>Qualatative vs. Quantative</h4>
+					<p>
+						Each feature may present itself as one of two different types: Qualatative data and Quantative data. Qualatative data is catagorical and discrete. It typically appears in datasets as a set of labels (text) or countable integers (numbers). The qualatative features in this dataset are: X, Y, day, month. Quantative data is real numerical values and continuous. It typically appears in datasets as real numbers. The Quantative features in this dataset are: FFMC, DMC, DC, ISI, temp, RH, wind, rain.
+						Correlation is defined differently between Qualatative features and Quantative features. 
+					</p>
+
+					<h4>Assessing Quantative Correlation</h4>
+					<p>
+						<b>Peasron Correlation Coefficient</b>
+					</p>
+					<p>
+						In statistics, the Pearson correlation coefficient is a measure of the linear correlation between two variables X and Y. It has a value between +1 and −1, where 1 is total positive linear correlation, 0 is no linear correlation, and −1 is total negative linear correlation. It is widely used in machine learning. Pearson Correlation Coefficient is only a viable metric for 
+					</p>
+					<p>
+						<b>Definition</b><br>
+						Pearson's correlation coefficient is the covariance of the two variables divided by the product of their standard deviations. The form of the definition involves a "product moment", that is, the mean (the first moment about the origin) of the product of the mean-adjusted random variables; hence the modifier product-moment in the name.<br>
+						<br>
+						<b>Mathematics</b><br>
+						 Given a pair of random variables ${\displaystyle (X,Y)}$ (X,Y), the formula is:
+
+						${\displaystyle \rho _{X,Y}={\frac {\operatorname {cov} (X,Y)}{\sigma _{X}\sigma _{Y}}}}$ ${\displaystyle \rho _{X,Y}={\frac {\operatorname {cov} (X,Y)}{\sigma _{X}\sigma _{Y}}}}$
+
+						(Eq.1)
+
+						where:
+						${\displaystyle \operatorname {cov} } \operatorname {cov}$  is the covariance
+						${\displaystyle \sigma _{X}} \sigma _{X}$ is the standard deviation of ${\displaystyle X}$ X
+						${\displaystyle \sigma _{Y}}  \sigma_Y$  is the standard deviation of ${\displaystyle Y}$ Y
+
+					</p>
+
+					<h4>Assessing Qualatative Correlation</h4>
+					<p>
+						For catagorical data, the best approach to determine correlation is to observe the number of instances where the result occurred, and determine if their is a significant non-uniform distrubtion. this occurence - total uniform occurence, the result is the correlation of that one catagory.
+					</p>
+					<!--
 					<p style='color:red; background-color:yellow;'>
 						Strategy: separate features into qualitative and quantative data.
 						qualitative features: X, Y, day, month.
@@ -845,6 +887,7 @@ getTraining = (arr, test) => flatten( arr.filter( d => d !== test ));
 						<b>#TODO:</b> change the way I evaluate the month, day, X, Y as I use arbitray numbering for it.
 						Use a probablistic approach.
 					</p>
+					-->
 
 
 					<!-- Feature Correlation Table-->
